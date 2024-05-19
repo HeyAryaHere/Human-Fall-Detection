@@ -17,7 +17,7 @@ from ActionsEstLoader import TSSTG
 
 #source = '../Data/test_video/test7.mp4'
 #source = '../Data/falldata/Home/Videos/video (2).avi'  # hard detect
-source = "C:/Users/ARYA BHATT/Downloads/Jump_OnPF_1_Cam1_1.avi"
+source = "Passenger_Fall_1.mp4"
 #source = 2
 
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
                         help='Show skeleton pose.')
     par.add_argument('--save_out', type=str, default='',
                         help='Save display to video file.')
-    par.add_argument('--device', type=str, default='cpu',
+    par.add_argument('--device', type=str, default='cuda',
                         help='Device to run model on cpu or cuda.')
     args = par.parse_args()
 
@@ -81,10 +81,10 @@ if __name__ == '__main__':
     cam_source = args.camera
     if type(cam_source) is str and os.path.isfile(cam_source):
         # Use loader thread with Q for video file.
-        cam = CamLoader_Q(cam_source, queue_size=10000000, preprocess=preproc).start()
+        cam = CamLoader_Q(cam_source, queue_size=1000, preprocess=preproc).start()
     else:
         # Use normal thread loader for webcam.
-        cam = CamLoader(int(cam_source) if cam_source.isdigit() else cam_source, queue_size=10000,
+        cam = CamLoader(int(cam_source) if cam_source.isdigit() else cam_source,
                         preprocess=preproc).start()
 
     #frame_size = cam.frame_size
